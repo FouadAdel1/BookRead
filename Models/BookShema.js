@@ -6,7 +6,7 @@ const BookSchema = Schema({
   name: { type: String, required: true },
   author_id: { type: Schema.Types.ObjectId, ref: "Author" },
   category_id: { type: Schema.Types.ObjectId, ref: "Category" },
-  img: { type: String },
+  book_image: { type: String },
 });
 
 const Book = mongoose.model("Book", BookSchema);
