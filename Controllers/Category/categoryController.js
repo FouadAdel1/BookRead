@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 require("../../Models/CategorySchema");
 const categoryModel = mongoose.model("Category");
-//for catgeroy_id in categoryModel.
-var counter = 0;
 
 let getAllCatgeroy = async (req, res, next) => {
   try {
@@ -14,13 +12,16 @@ let getAllCatgeroy = async (req, res, next) => {
 };
 
 let createCategroy = async (req, res, next) => {
+  var counter = 0;
   try {
     const categories = await categoryModel.find({});
-    
+    const lastCategory = await categoryModel.findOne({}).sort({ id: -1 });
     if (categories.length == 0) {
       counter = 1;
+    } else if (lastCategory.id == categories.length + 1) {
+      counter = lastCategory.id + 1;
     } else {
-      counter = categories.length+1;
+      counter = categories.length + 1;
     }
     const category = new categoryModel({
       id: counter,
@@ -47,11 +48,11 @@ let upadtecatgeroy = async (req, res, next) => {
   }
 };
 
-let deletecatgeroy =  (req, res, next) => {
+let deletecatgeroy = (req, res, next) => {
   try {
     categoryModel.deleteOne({ id: req.body.id }).then(() => {
-       res.status(200).json({ message: "delete catgeroy" });
-     })
+      res.status(200).json({ message: "delete catgeroy" });
+    });
   } catch (error) {
     next(error);
   }

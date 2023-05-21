@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 var moment = require("moment");
 require("../../Models/AuthorShema");
 const authorModel = mongoose.model("Author");
-var counter = 0;
+
 let getAllAuthors = async (req, res, next) => {
   try {
     const authors = await authorModel
@@ -25,10 +25,14 @@ let getOneAuthors = async (req, res, next) => {
 };
 
 let createAuthor = async (req, res, next) => {
+  var counter = 0;
   try {
     const authors = await authorModel.find({});
+    const lastAuthor = await authorModel.findOne({}).sort({ id: -1 });
     if (authors.length == 0) {
       counter = 1;
+    } else if (lastAuthor.id == authors.length + 1) {
+      counter = lastAuthor.id + 1;
     } else {
       counter = authors.length + 1;
     }
