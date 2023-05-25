@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 var moment = require("moment");
 const AuthorSchema = Schema({
-  id: { type: Number, unique: true },
+  
   firstname: { type: String, required: true },
   lastname: { type: String, required: true },
   dateOfBirth: {

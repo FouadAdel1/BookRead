@@ -6,8 +6,8 @@ let getAllBooks = async (req, res, next) => {
   try {
     const books = await bookModel
       .find({})
-      .populate({ path: "author_id", select: "firstname id" })
-      .populate({ path: "category_id", select: "name id" });
+      .populate({ path: "author_id", select: "firstname " })
+      .populate({ path: "category_id", select: "name " });
     res.status(200).json({ data: books });
   } catch (error) {
     next(error);
@@ -17,7 +17,7 @@ let getAllBooks = async (req, res, next) => {
 let getOneBook = async (req, res, next) => {
   try {
     const book = await bookModel
-      .findOne({ id: req.params.id })
+      .findOne({ _id: req.params.id })
       .populate({ path: "author_id", select: "firstname id" })
       .populate({ path: "category_id", select: "name id" });
     res.status(200).json({ data: book });
@@ -28,16 +28,6 @@ let getOneBook = async (req, res, next) => {
 
 let createOneBook = async (req, res, next) => {
   try {
-    var counter = 0;
-    const books = await bookModel.find({});
-    let lastbook = await bookModel.findOne({}).sort({ id: -1 });
-    if (books.length == 0) {
-      counter = 1;
-    } else if (lastbook.id == books.length + 1) {
-      counter = lastbook.id + 1;
-    } else {
-      counter = books.length + 1;
-    }
     const book = bookModel({
       id: counter,
       name: req.body.name,
@@ -56,7 +46,7 @@ let updateOneBook = async(req, res, next) => {
   try {
     
     const book = await bookModel.findOneAndUpdate(
-      { id: req.body.id },
+      { _id: req.body.id },
       {
         name: req.body.name,
         author_id: req.body.author_id,
