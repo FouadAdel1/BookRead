@@ -24,17 +24,20 @@ mongoose
   .catch((error) => {
     console.error("Error connecting to MongoDB:", error);
   });
-
+app.use(express.json());
+app.use(express.urlencoded({extended:true}))
 // middleware for logging events
 app.use((req, res, next) => {
+  
   console.log(`${req.url} whith method ${req.method}`);
+  console.log(req.body)
   next();
 });
 
 // middleware for resources management and check authontication and authorization
 
 // for parse all requests to jva script object
-app.use(express.json());
+
 
 app.use(registerRouter);
 app.use(loginRouter);

@@ -14,9 +14,7 @@ let getAllCatgeroy = async (req, res, next) => {
 let createCategroy = async (req, res, next) => {
   try {
     const category = new categoryModel({
-      id: counter,
       name: req.body.name,
-      category_image: "",
     });
     category.save();
     res.status(200).json({ data: category });

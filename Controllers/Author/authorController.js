@@ -27,7 +27,6 @@ let getOneAuthors = async (req, res, next) => {
 let createAuthor = async (req, res, next) => {
   try {
     const author = new authorModel({
-      id: counter,
       firstname: req.body.firstname,
       lastname: req.body.lastname,
       dateOfBirth: moment(new Date(req.body.dateOfBirth)).format("YYYY-MM-DD"),
@@ -42,7 +41,6 @@ let createAuthor = async (req, res, next) => {
 };
 
 let updateAuthors = async (req, res, next) => {
-  
   try {
     const author = await authorModel.findOneAndUpdate(
       { _id: req.body.id },
@@ -62,6 +60,7 @@ let updateAuthors = async (req, res, next) => {
     next(error);
   }
 };
+
 let deleteAuthors = (req, res, next) => {
   try {
     authorModel.deleteOne({ _id: req.body.id }).then(() => {

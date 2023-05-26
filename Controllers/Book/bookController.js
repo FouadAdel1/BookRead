@@ -6,7 +6,7 @@ let getAllBooks = async (req, res, next) => {
   try {
     const books = await bookModel
       .find({})
-      .populate({ path: "author_id", select: "firstname " })
+      .populate({ path: "author_id", select: "firstname lastname dateOfBirth" })
       .populate({ path: "category_id", select: "name " });
     res.status(200).json({ data: books });
   } catch (error) {
@@ -29,7 +29,6 @@ let getOneBook = async (req, res, next) => {
 let createOneBook = async (req, res, next) => {
   try {
     const book = bookModel({
-      id: counter,
       name: req.body.name,
       author_id: req.body.author_id,
       category_id: req.body.category_id,
