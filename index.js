@@ -11,6 +11,7 @@ const bookRouter = require("./Routes/User_Routes/bookRouter");
 const categoryRouter = require("./Routes/User_Routes/categoryRouter");
 const registerRouter = require("./Routes/Auth_Router/Register");
 const loginRouter = require("./Routes/Auth_Router/Login");
+const mwAuth= require("./core/checkAuth/checkAuth")
 
 // for connecting Database and connections with server
 mongoose
@@ -24,26 +25,26 @@ mongoose
   .catch((error) => {
     console.error("Error connecting to MongoDB:", error);
   });
-app.use(express.json());
-app.use(express.urlencoded({extended:true}))
+
+
 // middleware for logging events
 app.use((req, res, next) => {
-  
   console.log(`${req.url} whith method ${req.method}`);
-  console.log(req.body)
   next();
 });
 
-// middleware for resources management and check authontication and authorization
 
 // for parse all requests to jva script object
-
-
+app.use(express.json());
+// middleware for resources management and check authontication and authorization
 app.use(registerRouter);
 app.use(loginRouter);
+//check for token for is user or not 
+app.use(mwAuth.checkUserandAdminAuth);
 app.use(authorRouter);
 app.use(bookRouter);
 app.use(categoryRouter);
+
 app.use(adminAutherRouter);
 app.use(adminbookRouter);
 app.use(admincatgeroy);

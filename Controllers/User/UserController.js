@@ -8,7 +8,6 @@ const someOtherPlaintextPassword = "not_bacon";
 
 const createUser = async (req, res, next) => {
     try {
-      
     myPlaintextPassword = req.body.password;
     bcrypt.hash(myPlaintextPassword, saltRounds).then( (hash)=>{
       // Store hash in your password DB.
