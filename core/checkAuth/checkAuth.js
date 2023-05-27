@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken");
 
 const checkUserandAdminAuth = (req, res, next) => {
   try {
-    console.log(req);
     let token = req.get("authorization").split(" ")[1];
     let data = jwt.verify(token, process.env.SECRET_KEY);
     if (data.role == "admin" || data.role == "user") {

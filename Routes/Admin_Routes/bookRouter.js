@@ -28,6 +28,7 @@ bookRouter
     checkValidation,
     bookController.deleteOneBook
   );
-bookRouter.route("/admin/books/:id").getcheckAdminAuth,
-  bookController.getOneBook;
+bookRouter
+  .route("/admin/books/:id")
+  .get(checkAdminAuth, bookController.getOneBook);
 module.exports = bookRouter;
